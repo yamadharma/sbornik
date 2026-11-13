@@ -1,0 +1,54 @@
+% \iffalse meta-comment
+% File: sbornik-font.dtx (part of the sbornik bundle)
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass[full]{l3doc}
+\begin{document}\DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \title{Module \pkg{sbornik-font}}
+% \author{}\date{}\maketitle
+%
+% \begin{documentation}
+% Font-size module. В классе регистрирует ключи \texttt{fontsize=NNpt}
+% и «голые» \texttt{NNpt}.
+% \end{documentation}
+%
+% \begin{implementation}
+%    \begin{macrocode}
+%<*module>
+\tl_new:N \g_sbornik_fontsize_tl
+\tl_gset:Nn \g_sbornik_fontsize_tl { 10pt }
+
+\keys_define:nn { sbornik/font }
+{
+  fontsize .tl_gset:N = \g_sbornik_fontsize_tl,
+  fontsize .initial:n = 10pt,
+}
+
+% Регистрирует в семействе класса ключи fontsize и «голые» NNpt.
+\cs_new_protected:Npn \sbornik_font_declare_keys:n #1
+{
+  \keys_define:nn {#1}
+  {
+    fontsize .code:n =
+    { \keys_set:nn { sbornik/font } { fontsize = ##1 } },
+    8pt  .meta:n = { fontsize = 8pt },
+    9pt  .meta:n = { fontsize = 9pt },
+    10pt .meta:n = { fontsize = 10pt },
+    11pt .meta:n = { fontsize = 11pt },
+    12pt .meta:n = { fontsize = 12pt },
+    14pt .meta:n = { fontsize = 14pt },
+    17pt .meta:n = { fontsize = 17pt },
+    20pt .meta:n = { fontsize = 20pt },
+  }
+}
+%</module>
+%    \end{macrocode}
+% \end{implementation}
+% \Finale
+\endinput

@@ -1,0 +1,48 @@
+% \iffalse meta-comment
+% File: sbornik-paper.dtx (part of the sbornik bundle)
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass[full]{l3doc}
+\begin{document}\DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \title{Module \pkg{sbornik-paper}}
+% \author{}\date{}\maketitle
+%
+% \begin{documentation}
+% Paper-size module. Provides \texttt{paper=a4paper|a5paper|letterpaper}.
+% \end{documentation}
+%
+% \begin{implementation}
+%    \begin{macrocode}
+%<*module>
+\tl_new:N \g_sbornik_paper_tl
+\tl_gset:Nn \g_sbornik_paper_tl { a4paper }
+
+\keys_define:nn { sbornik/paper }
+{
+  paper .choices:nn = { a4paper, a5paper, letterpaper }
+  { \tl_gset:Nn \g_sbornik_paper_tl {#1} },
+  paper .initial:n = a4paper,
+}
+
+% KOMA-совместимое представление (a4 / a5 / letter).
+\cs_new:Npn \sbornik_paper_koma:
+{
+  \str_case:VnF \g_sbornik_paper_tl
+  {
+    { a4paper }     { a4 }
+    { a5paper }     { a5 }
+    { letterpaper } { letter }
+  }
+  { a4 }
+}
+%</module>
+%    \end{macrocode}
+% \end{implementation}
+% \Finale
+\endinput

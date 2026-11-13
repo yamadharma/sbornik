@@ -1,0 +1,58 @@
+% \iffalse meta-comment
+% File: sbornik-theorems.dtx (part of the sbornik bundle)
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass[full]{l3doc}
+\begin{document}\DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \title{Module \pkg{sbornik-theorems}}
+% \author{}\date{}\maketitle
+%
+% \begin{documentation}
+% Theorem module on top of \pkg{amsthm}. Названия переключаются
+% через \pkg{babel} (\texttt{\string\addto\string\captionsrussian}).
+% \end{documentation}
+%
+% \begin{implementation}
+%    \begin{macrocode}
+%<*module>
+\bool_new:N \g_sbornik_theorems_bool
+\bool_gset_true:N \g_sbornik_theorems_bool
+
+\providecommand\theoremname{Theorem}
+\providecommand\lemmaname{Lemma}
+\providecommand\corollaryname{Corollary}
+\providecommand\definitionname{Definition}
+\providecommand\examplename{Example}
+
+\cs_new_protected:Npn \sbornik_theorems_apply:
+{
+  \bool_if:NT \g_sbornik_theorems_bool
+  {
+    \RequirePackage{amsthm}
+    \theoremstyle{plain}
+    \newtheorem{theorem}{\theoremname}[section]
+    \newtheorem{lemma}[theorem]{\lemmaname}
+    \newtheorem{corollary}[theorem]{\corollaryname}
+    \theoremstyle{definition}
+    \newtheorem{definition}[theorem]{\definitionname}
+    \newtheorem{example}[theorem]{\examplename}
+    \addto\captionsrussian{%
+      \renewcommand{\theoremname}{Теорема}%
+      \renewcommand{\lemmaname}{Лемма}%
+      \renewcommand{\corollaryname}{Следствие}%
+      \renewcommand{\definitionname}{Определение}%
+      \renewcommand{\examplename}{Пример}%
+    }
+  }
+}
+%</module>
+%    \end{macrocode}
+% \end{implementation}
+% \Finale
+\endinput

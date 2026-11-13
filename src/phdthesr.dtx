@@ -1,0 +1,81 @@
+% \iffalse meta-comment
+% File: phdthesr.dtx (part of the sbornik bundle)
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass[full]{l3doc}
+\begin{document}\DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \title{The \clsfile{phdthesr} class}
+% \author{}\date{}\maketitle
+%
+% \begin{documentation}
+% Класс диссертации. База: \pkg{scrbook}.
+% \end{documentation}
+%
+% \begin{implementation}
+%    \begin{macrocode}
+%<*class>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesExplClass{phdthesr}{2026/11/06}{0.1}
+{Class for dissertations (sbornik bundle)}
+
+\tl_new:N \g_phdthesr_doctype_tl
+\tl_gset:Nn \g_phdthesr_doctype_tl { phd }
+\bool_new:N \g_phdthesr_oneside_bool
+\bool_gset_false:N \g_phdthesr_oneside_bool
+
+\keys_define:nn { phdthesr }
+{
+  paper    .code:n       = { \keys_set:nn { sbornik/paper } { paper    = #1 } },
+  language .code:n       = { \keys_set:nn { sbornik/lang  } { language = #1 } },
+  theorems .bool_set:N   = \g_sbornik_theorems_bool,
+  theorems .default:n    = true,
+  doctype  .choices:nn   = { phd, masters }
+  { \tl_gset:Nn \g_phdthesr_doctype_tl {#1} },
+  doctype  .initial:n    = phd,
+  oneside  .bool_gset:N  = \g_phdthesr_oneside_bool,
+  oneside  .default:n    = true,
+}
+
+\sbornik_font_declare_keys:n { phdthesr }
+
+\DeclareUnknownKeyHandler
+{ \PassOptionsToClass{\CurrentOption}{scrbook} }
+
+\ProcessKeyOptions[phdthesr]
+
+\bool_if:NTF \g_phdthesr_oneside_bool
+{
+  \exp_args:Nx \PassOptionsToClass
+  { oneside , paper=\sbornik_paper_koma: , fontsize=\g_sbornik_fontsize_tl }
+  { scrbook }
+}
+{
+  \exp_args:Nx \PassOptionsToClass
+  { twoside , paper=\sbornik_paper_koma: , fontsize=\g_sbornik_fontsize_tl }
+  { scrbook }
+}
+\LoadClass{scrbook}
+
+\sbornik_theorems_apply:
+\sbornik_lang_apply:
+
+% --- специфика диссертации ---
+\NewDocumentCommand \doctypename { }
+{
+  \str_case:Vn \g_phdthesr_doctype_tl
+  {
+    { phd }     { Doctor of Philosophy }
+    { masters } { Master of Science }
+  }
+}
+%</class>
+%    \end{macrocode}
+% \end{implementation}
+% \Finale
+\endinput

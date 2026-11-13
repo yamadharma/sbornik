@@ -1,0 +1,28 @@
+\input l3docstrip.tex
+\keepsilent
+\usedir{tex/latex/sbornik}
+
+\generate{
+  \file{methodka.cls}{
+    \from{methodka.dtx}{class}
+    \from{sbornik-paper.dtx}{module}
+    \from{sbornik-font.dtx}{module}
+    \from{sbornik-theorems.dtx}{module}
+    \from{sbornik-lang.dtx}{module}
+  }
+  \file{phdthesr.cls}{
+    \from{phdthesr.dtx}{class}
+    \from{sbornik-paper.dtx}{module}
+    \from{sbornik-font.dtx}{module}
+    \from{sbornik-theorems.dtx}{module}
+    \from{sbornik-lang.dtx}{module}
+  }
+  \file{pfuproc.cls}{
+    \from{pfuproc.dtx}{class}
+    \from{sbornik-paper.dtx}{module}
+    \from{sbornik-font.dtx}{module}
+    \from{sbornik-theorems.dtx}{module}
+    \from{sbornik-lang.dtx}{module}
+  }
+}
+\endbatchfile

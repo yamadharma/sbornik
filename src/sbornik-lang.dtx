@@ -1,0 +1,44 @@
+% \iffalse meta-comment
+% File: sbornik-lang.dtx (part of the sbornik bundle)
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass[full]{l3doc}
+\begin{document}\DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \title{Module \pkg{sbornik-lang}}
+% \author{}\date{}\maketitle
+%
+% \begin{documentation}
+% Language module: английский + русский через \pkg{babel}.
+% Последний в опциях \pkg{babel} становится основным по умолчанию.
+% \end{documentation}
+%
+% \begin{implementation}
+%    \begin{macrocode}
+%<*module>
+\tl_new:N \g_sbornik_lang_tl
+\tl_gset:Nn \g_sbornik_lang_tl { russian }
+
+\keys_define:nn { sbornik/lang }
+{
+  language .choices:nn = { russian, english }
+  { \tl_gset:Nn \g_sbornik_lang_tl {#1} },
+  language .initial:n = russian,
+}
+
+\cs_new_protected:Npn \sbornik_lang_apply:
+{
+  \tl_if_eq:NnTF \g_sbornik_lang_tl { english }
+  { \RequirePackage[russian,english]{babel} }
+  { \RequirePackage[english,russian]{babel} }
+}
+%</module>
+%    \end{macrocode}
+% \end{implementation}
+% \Finale
+\endinput

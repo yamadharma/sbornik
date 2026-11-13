@@ -1,0 +1,65 @@
+% \iffalse meta-comment
+% File: methodka.dtx (part of the sbornik bundle)
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass[full]{l3doc}
+\begin{document}\DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \title{The \clsfile{methodka} class}
+% \author{}\date{}\maketitle
+%
+% \begin{documentation}
+% Класс методички. База: \pkg{scrartcl}.
+% \end{documentation}
+%
+% \begin{implementation}
+%    \begin{macrocode}
+%<*class>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesExplClass{methodka}{2026/11/06}{0.1}
+{Class for methodical guidelines (sbornik bundle)}
+
+\tl_new:N \l_methodka_method_tl
+\tl_set:Nn \l_methodka_method_tl { Лабораторная~работа }
+
+\keys_define:nn { methodka }
+{
+  paper    .code:n     = { \keys_set:nn { sbornik/paper } { paper    = #1 } },
+  language .code:n     = { \keys_set:nn { sbornik/lang  } { language = #1 } },
+  theorems .bool_set:N = \g_sbornik_theorems_bool,
+  theorems .default:n  = true,
+  method   .tl_set:N   = \l_methodka_method_tl,
+  method   .initial:n  = { Лабораторная~работа },
+}
+
+\sbornik_font_declare_keys:n { methodka }
+
+\DeclareUnknownKeyHandler
+{ \PassOptionsToClass{\CurrentOption}{scrartcl} }
+
+\ProcessKeyOptions[methodka]
+
+\exp_args:Nx \PassOptionsToClass
+{ paper=\sbornik_paper_koma: , fontsize=\g_sbornik_fontsize_tl }
+{ scrartcl }
+\LoadClass{scrartcl}
+
+\sbornik_theorems_apply:
+\sbornik_lang_apply:
+
+% --- специфика методички ---
+\KOMAoptions{parskip=half}
+\setlength{\parindent}{0pt}
+
+\NewDocumentCommand \methodname { }
+{ \tl_use:N \l_methodka_method_tl }
+%</class>
+%    \end{macrocode}
+% \end{implementation}
+% \Finale
+\endinput
